@@ -2,3 +2,7 @@ ollama-data
 webui-data
 rabbitmq-data
 config
+elasticsearch_data
+kibana
+logstash
+grafana
