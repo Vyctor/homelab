@@ -9,8 +9,8 @@ services:
       - JELLYFIN_PublishedServerUrl=http://192.168.0.112
     volumes:
       - ./config:/config
-      - /mnt/disco/Series:/data/tvshows
-      - /mnt/disco/Filmes:/data/movies
+      - /home/vvguimaraes/Documentos/Series:/data/tvshows
+      - /home/vvguimaraes/Documentos/Filmes:/data/movies
     ports:
       - 8096:8096
     restart: always
