@@ -6,3 +6,4 @@ elasticsearch_data
 kibana
 logstash
 grafana
+portainer_data
