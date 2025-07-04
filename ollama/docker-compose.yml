@@ -54,7 +54,7 @@ services:
       - WEBUI_AUTH=False
       - WEBUI_SECRET_KEY=t0p-s3cr3t
     ports:
-      - "8080:8080"
+      - "8092:8080"
     deploy:
       resources:
         reservations:
