@@ -1,12 +1,47 @@
+version: '3.8'
+
 services:
-  rabbitmq:
+  rabbitmq1:
     image: rabbitmq:management
-    container_name: rabbitmq
+    container_name: rabbitmq1
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     volumes:
-      - ./rabbitmq-data:/var/lib/rabbitmq
-    restart: no
+      - rabbitmq_data1:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: securepassword
+      RABBITMQ_CLUSTER_NODE: rabbitmq1@rabbitmq
+      RABBITMQ_NODENAME: rabbitmq1
+      RABBITMQ_CLUSTER_NODES: rabbitmq2@rabbitmq
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672/api/overview"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  rabbitmq2:
+    image: rabbitmq:management
+    container_name: rabbitmq2
+    volumes:
+      - rabbitmq_data2:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: securepassword
+      RABBITMQ_CLUSTER_NODE: rabbitmq2@rabbitmq
+      RABBITMQ_NODENAME: rabbitmq2
+      RABBITMQ_CLUSTER_NODES: rabbitmq1@rabbitmq
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672/api/overview"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
 volumes:
-  rabbitmq_data:
+  rabbitmq_data1:
+  rabbitmq_data2:
